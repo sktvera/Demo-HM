@@ -28,7 +28,7 @@ const Page: NextPageWithLayout = () => {
     saveQuoteTemplates(next)
   }
   const persist = (): void => {
-    if (!editing || !editing.name.trim() || !editing.items.length) return
+    if (!editing?.name.trim() || !editing.items.length) return
     saveAll(templates.some(template => template.id === editing.id) ? templates.map(template => template.id === editing.id ? editing : template) : [...templates, editing])
     setEditing(null)
   }

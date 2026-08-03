@@ -466,7 +466,7 @@ const Page: NextPageWithLayout = () => {
                   <td>
                     <button
                       className='copy-digital-link'
-                      onClick={() => void copyLink(quote)}
+                      onClick={() => { void copyLink(quote) }}
                     >
                       {copied === quote.id
                         ? '✓ Link copiado'
@@ -1140,7 +1140,7 @@ const Page: NextPageWithLayout = () => {
                       </strong>
                       <small>
                         Confirmada por:{' '}
-                        {summary.decidedBy || 'Equipo HM Maquinaria'}
+                        {summary.decidedBy ?? 'Equipo HM Maquinaria'}
                       </small>
                     </Box>
                   </Box>
@@ -1175,7 +1175,7 @@ const Page: NextPageWithLayout = () => {
                   <Box className='summary-comment'>
                     <span>Comentario</span>
                     <p>
-                      {summary.purchaseOrder?.comment ||
+                       {summary.purchaseOrder?.comment ??
                         'Sin comentarios adicionales.'}
                     </p>
                   </Box>

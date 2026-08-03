@@ -76,7 +76,7 @@ const Page: NextPageWithLayout = () => {
     localStorage.setItem(KEY, JSON.stringify(next))
   }
   const persistEditing = (): void => {
-    if (!editing || !editing.name.trim()) return
+    if (!editing?.name.trim()) return
     saveAll(items.some(item => item.id === editing.id) ? items.map(item => item.id === editing.id ? editing : item) : [...items, editing])
     setEditing(null)
   }
@@ -111,12 +111,12 @@ const Page: NextPageWithLayout = () => {
     const expires = new Date()
     expires.setFullYear(expires.getFullYear() + 1)
     const newRecords: CertificateRecord[] = approved
-      .filter(user => !existing.some(record => record.id === `certificate-${course.id}-${user.id}` || (record.documentNumber === (user.documentNumber || '') && record.equipment === course.title)) && !registered.some(record => record.id === `certificate-${course.id}-${user.id}` || (record.documentNumber === (user.documentNumber || '') && record.equipment === course.title)))
+      .filter(user => !existing.some(record => record.id === `certificate-${course.id}-${user.id}` || (record.documentNumber === (user.documentNumber ?? '') && record.equipment === course.title)) && !registered.some(record => record.id === `certificate-${course.id}-${user.id}` || (record.documentNumber === (user.documentNumber ?? '') && record.equipment === course.title)))
       .map(user => ({
         id: `certificate-${course.id}-${user.id}`,
         fullName: user.name,
-        documentType: user.documentType || 'Documento de identidad',
-        documentNumber: user.documentNumber || '',
+        documentType: user.documentType ?? 'Documento de identidad',
+        documentNumber: user.documentNumber ?? '',
         equipment: course.title,
         trainingHours: Math.max(1, course.sessions.length),
         equipmentBrand: '',
@@ -206,7 +206,7 @@ const Page: NextPageWithLayout = () => {
             <Box className='associate-student-visual-list'>{relatedStudentIds.map(userId => {
               const user = users.find(item => item.id === userId)
               if (!user) return null
-              return <Box key={user.id} className='associate-student-visual-card'><span className='associate-mini-avatar'>{user.name.slice(0, 2).toUpperCase()}</span><Box><strong>{user.name}</strong><small>{user.documentType || 'Documento'} · {user.documentNumber || 'Sin documento'}</small><small>{user.email}</small></Box><span className='associate-student-badge'>Alumno</span></Box>
+              return <Box key={user.id} className='associate-student-visual-card'><span className='associate-mini-avatar'>{user.name.slice(0, 2).toUpperCase()}</span><Box><strong>{user.name}</strong><small>{user.documentType ?? 'Documento'} · {user.documentNumber ?? 'Sin documento'}</small><small>{user.email}</small></Box><span className='associate-student-badge'>Alumno</span></Box>
             })}{!relatedStudentIds.length && <Box className='access-empty'><strong>Sin alumnos relacionados</strong><p>Los alumnos seleccionados en el curso aparecerán aquí automáticamente.</p></Box>}</Box>
           </Box>}
 

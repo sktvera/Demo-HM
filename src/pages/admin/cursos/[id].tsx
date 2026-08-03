@@ -98,7 +98,7 @@ const CourseOperationsPage: NextPageWithLayout = () => {
       <AdminGuard permission='academic.manage'>
         <Box className='course-ops-empty'>
           <strong>{router.isReady ? 'Curso no encontrado' : 'Cargando curso…'}</strong>
-          {router.isReady && <button onClick={() => void router.push('/admin/gestion-cursos')}>Volver a Gestión de cursos</button>}
+          {router.isReady && <button onClick={() => { void router.push('/admin/gestion-cursos') }}>Volver a Gestión de cursos</button>}
         </Box>
       </AdminGuard>
     )
@@ -198,7 +198,7 @@ const CourseOperationsPage: NextPageWithLayout = () => {
       <Box className='course-ops'>
         <Flex className='course-ops-hero' justify='between' align='end' gap='4'>
           <Box>
-            <button className='course-ops-back' onClick={() => void router.push('/admin/gestion-cursos')}>← Gestión de cursos</button>
+            <button className='course-ops-back' onClick={() => { void router.push('/admin/gestion-cursos') }}>← Gestión de cursos</button>
             <span>Centro de operación académica</span>
             <Text as='h1'>{course.title}</Text>
             <Text>{course.organization || 'Sin organización'} · {users.find(user => user.id === course.teacherId)?.name ?? 'Sin instructor'} · Inicio {formatDate(course.startDate)}</Text>
@@ -235,7 +235,7 @@ const CourseOperationsPage: NextPageWithLayout = () => {
                   {course.sessions.slice().sort((a, b) => a.date.localeCompare(b.date)).slice(0, 5).map(session => (
                     <Box key={session.id}>
                       <time><strong>{new Date(`${session.date}T12:00:00`).getDate()}</strong><span>{new Date(`${session.date}T12:00:00`).toLocaleDateString('es-CO', { month: 'short' })}</span></time>
-                      <Box><strong>{session.title}</strong><small>{session.startTime}–{session.endTime} · {session.topic || 'Tema por registrar'}</small></Box>
+                      <Box><strong>{session.title}</strong><small>{session.startTime}–{session.endTime} · {session.topic ?? 'Tema por registrar'}</small></Box>
                       <span className={`session-state ${session.status ?? 'programada'}`}>{session.status ?? 'programada'}</span>
                     </Box>
                   ))}
@@ -266,7 +266,7 @@ const CourseOperationsPage: NextPageWithLayout = () => {
               {course.sessions.slice().sort((a, b) => a.date.localeCompare(b.date)).map(session => (
                 <Box key={session.id}>
                   <time><strong>{new Date(`${session.date}T12:00:00`).getDate()}</strong><span>{new Date(`${session.date}T12:00:00`).toLocaleDateString('es-CO', { month: 'short' })}</span></time>
-                  <Box><strong>{session.title}</strong><small>{session.startTime}–{session.endTime} · {session.topic || 'Tema pendiente'}</small></Box>
+                  <Box><strong>{session.title}</strong><small>{session.startTime}–{session.endTime} · {session.topic ?? 'Tema pendiente'}</small></Box>
                   <span className={`session-state ${session.status ?? 'programada'}`}>{session.status ?? 'programada'}</span>
                   <button onClick={() => setSessionDraft({ ...session, attendance: { ...session.attendance } })}>{session.status === 'completada' ? 'Revisar asistencia' : 'Tomar asistencia'}</button>
                 </Box>
@@ -288,7 +288,7 @@ const CourseOperationsPage: NextPageWithLayout = () => {
               <Box className='evaluation-session-grid'>
                 {pendingAcademicSessions.map(({ session, index }) => <Box key={session.id}>
                   <Box className='evaluation-session-date'><span>Sesión {index + 1}</span><strong>{formatDate(session.date)}</strong><small>{session.startTime}–{session.endTime}</small></Box>
-                  <Box><strong>{session.title}</strong><small>{session.topic || 'Tema pendiente por registrar'}</small><span>Sin actividades</span></Box>
+                  <Box><strong>{session.title}</strong><small>{session.topic ?? 'Tema pendiente por registrar'}</small><span>Sin actividades</span></Box>
                   <button onClick={() => { setAssignmentError(''); setAssignmentDraft(emptyAssignment(session)) }}>+ Agregar actividad</button>
                 </Box>)}
                 {!orderedSessions.length && <Box className='course-ops-zero'>Primero configure y guarde las sesiones del curso.</Box>}
@@ -324,7 +324,7 @@ const CourseOperationsPage: NextPageWithLayout = () => {
                   {students.map(student => {
                     const progress = calculateStudentProgress(course, student.id)
                     return <tr key={student.id}>
-                      <td><strong>{student.name}</strong><small>{student.documentNumber || student.email}</small></td>
+                      <td><strong>{student.name}</strong><small>{student.documentNumber ?? student.email}</small></td>
                       {publishedAssignments.map(assignment => <td key={assignment.id}><input type='number' min='0' max={assignment.maxScore ?? 100} value={assignment.grades[student.id] ?? ''} placeholder='—' onChange={event => updateGrade(assignment.id, student.id, event.target.value)} /></td>)}
                       <td><strong className={progress.finalGrade >= course.passingGrade ? 'grade-pass' : 'grade-risk'}>{progress.finalGrade.toFixed(1)}</strong><small>Mín. {course.passingGrade}</small></td>
                     </tr>
@@ -342,12 +342,12 @@ const CourseOperationsPage: NextPageWithLayout = () => {
               {studentProgress.map(({ student, progress }) => (
                 <Box key={student.id}>
                   <span className='course-student-avatar'>{student.name.slice(0, 2).toUpperCase()}</span>
-                  <Box><strong>{student.name}</strong><small>{student.documentNumber || student.email}</small></Box>
+                  <Box><strong>{student.name}</strong><small>{student.documentNumber ?? student.email}</small></Box>
                   <Box><span>Progreso</span><strong>{percent(progress.courseProgress)}</strong></Box>
                   <Box><span>Asistencia</span><strong>{percent(progress.attendancePercentage)}</strong><small>Mín. {course.minimumAttendance}%</small></Box>
                   <Box><span>Nota final</span><strong>{progress.finalGrade.toFixed(1)}</strong><small>Mín. {course.passingGrade}</small></Box>
                   <span className={`course-result ${progress.result}`}>{progress.result.replace('_', ' ')}</span>
-                  <button onClick={() => void router.push(`/formacion/cursos/${course.id}?student=${student.id}`)}>Vista alumno ↗</button>
+                  <button onClick={() => { void router.push(`/formacion/cursos/${course.id}?student=${student.id}`) }}>Vista alumno ↗</button>
                 </Box>
               ))}
             </Box>
@@ -371,7 +371,7 @@ const CourseOperationsPage: NextPageWithLayout = () => {
                   const entry = attendanceEntry(sessionDraft.attendance[student.id])
                   return <Box key={student.id}>
                     <span className='course-student-avatar'>{student.name.slice(0, 2).toUpperCase()}</span>
-                    <Box><strong>{student.name}</strong><small>{student.documentNumber || student.email}</small></Box>
+                    <Box><strong>{student.name}</strong><small>{student.documentNumber ?? student.email}</small></Box>
                     <select value={entry.status} onChange={event => setSessionDraft({ ...sessionDraft, attendance: { ...sessionDraft.attendance, [student.id]: { ...entry, status: event.target.value as AttendanceStatus } } })}><option value='presente'>Presente</option><option value='tarde'>Tarde</option><option value='ausente'>Ausente</option><option value='excusa'>Excusa</option></select>
                     <input value={entry.observation} placeholder='Observación opcional' onChange={event => setSessionDraft({ ...sessionDraft, attendance: { ...sessionDraft.attendance, [student.id]: { ...entry, observation: event.target.value } } })} />
                   </Box>

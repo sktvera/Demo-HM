@@ -22,7 +22,7 @@ const StudentCoursePage = (): JSX.Element => {
   const requestedStudent = typeof router.query.student === 'string' ? router.query.student : ''
   const course = courses.find(item => item.id === courseId)
   const users = useMemo(() => readAccessData().users, [])
-  const studentId = requestedStudent || course?.studentIds[0] || ''
+  const studentId = requestedStudent ?? course?.studentIds[0] ?? ''
   const student = users.find(item => item.id === studentId)
 
   if (!router.isReady || !course || !student || !course.studentIds.includes(student.id)) {
@@ -82,7 +82,7 @@ const StudentCoursePage = (): JSX.Element => {
         <Box className='student-portal-grid'>
           <Box className='student-panel'>
             <span>Agenda</span><Text as='h2'>Próxima sesión</Text>
-            {nextSession ? <Box className='student-next-session'><time><strong>{new Date(`${nextSession.date}T12:00:00`).getDate()}</strong><span>{new Date(`${nextSession.date}T12:00:00`).toLocaleDateString('es-CO', { month: 'short' })}</span></time><Box><strong>{nextSession.title}</strong><p>{nextSession.startTime}–{nextSession.endTime}</p><small>{nextSession.topic || 'El instructor informará el tema de la sesión.'}</small></Box></Box> : <Box className='student-empty-state'>No hay próximas sesiones programadas.</Box>}
+            {nextSession ? <Box className='student-next-session'><time><strong>{new Date(`${nextSession.date}T12:00:00`).getDate()}</strong><span>{new Date(`${nextSession.date}T12:00:00`).toLocaleDateString('es-CO', { month: 'short' })}</span></time><Box><strong>{nextSession.title}</strong><p>{nextSession.startTime}–{nextSession.endTime}</p><small>{nextSession.topic ?? 'El instructor informará el tema de la sesión.'}</small></Box></Box> : <Box className='student-empty-state'>No hay próximas sesiones programadas.</Box>}
             <Box className='student-session-history'>
               <strong>Historial de sesiones</strong>
               {course.sessions.filter(item => item.status === 'completada').map(session => {

@@ -20,9 +20,7 @@ export default function Document(): JSX.Element {
         <style
           id='stitches'
           // tip explícito para cumplir reglas estrictas
-          dangerouslySetInnerHTML={
-            { __html: getCssText() } as { __html: string }
-          }
+          dangerouslySetInnerHTML={{ __html: getCssText() }}
         />
 
         {/* Favicon */}

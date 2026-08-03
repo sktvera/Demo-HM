@@ -14,9 +14,9 @@ const CUSTOM_RULES = {
   },
 }
 
-// kebab-case or SCREAMING_SNAKE_CASE
+// kebab-case, SCREAMING_SNAKE_CASE o segmentos dinámicos de Next ([id], [slug], ...)
 const FILENAME_REGEX =
-  /^((.|_)?[a-z0-9]+((-[a-z0-9]+)?(\.[a-z0-9]+)?)*|[A-Z0-9_]+)$/
+  /^((.|_)?[a-z0-9]+((-[a-z0-9]+)?(\.[a-z0-9]+)?)*|\[[a-z0-9]+\](\.[a-z0-9]+)?|[A-Z0-9_]+)$/
 
 module.exports = {
   root: true,
@@ -39,6 +39,7 @@ module.exports = {
 
     // Code Style
     'arrow-body-style': [ERROR, 'as-needed'],
+    'no-void': [ERROR, { allowAsStatement: true }],
     'import/no-extraneous-dependencies': ERROR,
     'import/order': [
       ERROR,
