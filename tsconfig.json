@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    // Ensure that .d.ts files are created by tsc, but not .js files
+    "allowJs": false,
+    // Enable top-level await, and other modern ESM features.
+    "target": "ESNext",
+    "module": "ESNext",
+    // Import non-ES modules as default imports
+    "esModuleInterop": true,
+    // Ensure that Babel can safely transpile files in the TypeScript project
+    "isolatedModules": true,
+    // Use React.createElement to replace JSX code
+    "jsx": "preserve",
+    // Ensure TS understand the DOM and esnext APIs
+    "lib": ["dom", "esnext"],
+    // Search under node_modules for non-relative imports
+    "moduleResolution": "node",
+    // Ensure that all branches return the correct type
+    "noImplicitReturns": true,
+    // Allow .json files to be imported
+    "resolveJsonModule": true,
+    // Skip type checking .d.ts files
+    "skipLibCheck": true,
+    // Enable strictest settings like strictNullChecks & noImplicitAny
+    "strict": true,
+    // Do not generate any file from TS compiler
+    "noEmit": true,
+    // Incremental compilation
+    "incremental": true,
+    // Nextjs tries to set it to true, it's already manage via eslint
+    "forceConsistentCasingInFileNames": false
+  },
+  "include": ["next-env.d.ts", "globals.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
