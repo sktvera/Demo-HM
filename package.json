@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
-    "lint": "eslint . --ext .js,.jsx,.mjs,.ts,.tsx,.md,.mdx --quiet --ignore-pattern='!.*' --color --fix"
+    "typecheck": "tsc --noEmit --incremental false",
+    "lint": "eslint . --ext .js,.jsx,.mjs,.ts,.tsx,.md,.mdx --quiet --ignore-pattern='!.*' --color",
+    "lint:strict": "eslint . --ext .js,.jsx,.mjs,.ts,.tsx,.md,.mdx --max-warnings=0 --ignore-pattern='!.*' --color",
+    "lint:fix": "pnpm lint:strict --fix"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "12.2.5",
@@ -19,6 +22,7 @@
     "@typescript-eslint/parser": "5.62.0",
     "eslint": "8.57.1",
     "eslint-config-prettier": "8.3.0",
+    "eslint-config-standard": "16.0.3",
     "eslint-config-standard-jsx": "11.0.0",
     "eslint-config-standard-react": "11.0.1",
     "eslint-config-standard-with-typescript": "21.0.1",

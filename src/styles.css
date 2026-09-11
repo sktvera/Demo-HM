@@ -1100,7 +1100,7 @@
 .course-plan-complete > span { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; border-radius: 50%; color: white; background: #039855; font-size: 22px; font-weight: 800; }
 .course-plan-complete strong { display: block; font-size: 18px; }
 .course-plan-complete p { margin: 4px 0 0; color: #388a69; }
-.evaluation-session-heading { display: flex; margin-bottom: 14px; justify-content: space-between; align-items: end; gap: 16px; }
+.evaluation-session-heading { display: flex; margin-bottom: 14px; justify-content: space-between; align-items: flex-end; gap: 16px; }
 .evaluation-session-heading span,.evaluation-session-heading strong { display: block; }
 .evaluation-session-heading span { color: #e85d05; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .evaluation-session-heading strong { margin-top: 3px; font-size: 18px; }

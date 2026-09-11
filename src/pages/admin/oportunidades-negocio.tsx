@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import Head from 'next/head'
 import { Box, Flex, Text } from 'components'
-import { asset } from 'paths'
+import { asset, BASE_PATH } from 'paths'
 import { AdminGuard } from 'components/admin-guard'
 import { AdminShell } from 'layout/admin-shell'
 
@@ -151,7 +151,7 @@ const Page: NextPageWithLayout = () => {
     setReason('')
   }
   const copyLink = async (quote: Quote): Promise<void> => {
-    const link = `${window.location.origin}/cotizacion-digital/${quote.token}`
+    const link = `${window.location.origin}${BASE_PATH}/cotizacion-digital/${quote.token}`
     await navigator.clipboard.writeText(link)
     setCopied(quote.id)
     window.setTimeout(() => setCopied(''), 1800)

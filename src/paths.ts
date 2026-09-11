@@ -1,4 +1,9 @@
-export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '/Demo-HM'
+const normalizeBasePath = (value?: string): string => {
+  if (!value || value === '/') return ''
+  return `/${value.replace(/^\/+|\/+$/g, '')}`
+}
+
+export const BASE_PATH = normalizeBasePath(process.env.NEXT_PUBLIC_BASE_PATH)
 
 export const asset = (url: string | undefined): string => {
   if (!url) return ''
